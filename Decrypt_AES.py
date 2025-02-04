@@ -66,17 +66,17 @@ def inv_add_round_key(state, round_key):
     return state
 
 
-def mul(a, b):
-    res = 0
-    for _ in range(8):
-        if b & 1:
-            res ^= a
-        GreaterThan255 = a & 0x80
-        a <<= 1
-        if GreaterThan255:
-            a ^= 0x1b
-        b >>= 1
-    return res % 256
+def mul(x, y, mod=0x11B):
+    """Nhân hai số trong trường hữu hạn GF(2^8) với modulo AES (0x11B)."""
+    result = 0
+    while y:
+        if y & 1:  # Nếu bit thấp nhất của y là 1, cộng x vào kết quả
+            result ^= x
+        x <<= 1  # Nhân x với 2 (dịch trái)
+        if x & 0x100:  # Nếu x vượt quá 8 bit (>= 256), thực hiện phép chia lấy dư với 0x11B
+            x ^= mod
+        y >>= 1  # Dịch phải y
+    return result
 
 def inv_mix_columns(state):
     for i in range(4):
