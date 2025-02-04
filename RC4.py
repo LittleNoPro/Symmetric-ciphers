@@ -4,7 +4,7 @@ def KSA(key):
     j = 0
     for i in range(256):
         j = (j + S[i] + key[i % key_length]) % 256
-        S[i], S[j] = S[j], S[i]
+        S[i], S[j] = S[j],  S[i]
     return S
 
 def PRGA(S, n):
