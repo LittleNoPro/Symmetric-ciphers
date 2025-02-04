@@ -91,8 +91,6 @@ def expand_key(master_key):
             word = [s_box[b] for b in word]  # Subword
             word[0] ^= r_con[i]  # Rcon
             i += 1
-        elif len(master_key) == 32 and len(key_columns) % iteration_size == 4:
-            word = [s_box[b] for b in word]
 
         word = bytes(i^j for i, j in zip(word, key_columns[-iteration_size]))
         key_columns.append(word)
